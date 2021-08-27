@@ -1,5 +1,5 @@
-####################### IMPORT MODULES #######################
-## modules for this task (numpy, opencv, os)                ##
+# IMPORT MODULES
+# Modules for this task (numpy, opencv, os)
 ##############################################################
 import cv2
 import numpy as np
@@ -11,10 +11,10 @@ import os
 shapes = {}
 
 
-################# ADD UTILITY FUNCTIONS HERE #################
-## You can define any utility functions for your code.      ##
-## Please add proper comments to ensure that your code is   ##
-## readable and easy to understand.                         ##
+#ADD UTILITY FUNCTIONS HERE
+# You can define any utility functions for your code.
+# Please add proper comments to ensure that your code is
+# readable and easy to understand.
 ##############################################################
 
 
