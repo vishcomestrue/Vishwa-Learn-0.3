@@ -4,10 +4,7 @@
 import cv2
 import numpy as np
 import os
-
-from matplotlib import pyplot as plt
-
-##############################################################
+#############################################################
 
 
 # Global variable for details of shapes found in image and will be put in this dictionary, returned from scan_image function
@@ -159,7 +156,7 @@ if __name__ == '__main__':
 
     # path to 'Sample1.png' image file
     # change the path when running with a new image
-    img_file_path = img_dir_path + 'Sample3' + '.png'
+    img_file_path = img_dir_path + 'Sample1' + '.png'
     print('============================================')
     shapes = scan_image(img_file_path)
     if type(shapes) is dict:
