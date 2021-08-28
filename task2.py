@@ -18,7 +18,7 @@ shapes = {}
 ##############################################################
 
 def get_contours(img, color):
-    contours, heirarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
     for everyContour in contours:
 
@@ -112,7 +112,7 @@ def scan_image(img_file_path):
         canny = cv2.Canny(blur_img, 50, 50)
         shapes = get_contours(canny, colors[i])
 
-    # Separating out blue
+    # TESTING ON SEPERATING OUT COLORS 
 
     # maskblue_img = cv2.inRange(img_hsv, lower_blue, upper_blue)
     # resultblue_img = cv2.bitwise_and(img, img, mask=maskblue_img)
