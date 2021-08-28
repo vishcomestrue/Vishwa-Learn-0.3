@@ -53,8 +53,9 @@ def get_contours(img, color):
         cv2.imshow('newimgcontour', img)
         cv2.waitKey(0)
 
-        return {objectShape: [color, area, x+width // 2, y+height // 2]}
+        shapes[objectShape] = [color, area, x + width//2, y + height//2]
 
+    return shapes
 
 ##############################################################
 
@@ -96,25 +97,20 @@ def scan_image(img_file_path):
     lower_red = np.array([0, 100, 100])
     upper_red = np.array([10, 255, 255])
     # Looking for green
-    lower_green = np.array([230, 100, 100])
-    upper_green = np.array([240, 255, 255])
+    lower_green = np.array([50, 100, 100])
+    upper_green = np.array([70, 255, 255])
+
 
     # Separating out blue
-    maskblue_img = cv2.inRange(img_hsv, lower_green, upper_green)
-    # cv2.imshow('result', maskblue_img)
 
+    maskblue_img = cv2.inRange(img_hsv, lower_red, upper_red)
     resultblue_img = cv2.bitwise_and(img, img, mask=maskblue_img)
-    # blue_img = cv2.cvtColor(resultblue_img, cv2.COLOR_HSV2RGB)
     grayblue_img = cv2.cvtColor(resultblue_img, cv2.COLOR_RGB2GRAY)
-    # cv2.imshow('newgray', grayblue_img)
+    blurblue_img = cv2.GaussianBlur(grayblue_img, (7, 3), -1, 0, -1, cv2.BORDER_WRAP)
 
-    blurblue_img = cv2.GaussianBlur(resultblue_img, (7, 7), 1)
-    # cv2.imshow('blurblue', blurblue_img)
+    canny = cv2.Canny(blurblue_img, 50, 50)
 
-    canny = cv2.Canny(grayblue_img, 50, 50)
-    # cv2.imshow('canny', canny)
-
-    shapes = get_contours(canny, 'green')
+    shapes = get_contours(canny, 'red')
 
     # Separating out red
     # maskred_img = cv2.inRange(img_hsv, lower_red, upper_red)
