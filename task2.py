@@ -101,16 +101,31 @@ def scan_image(img_file_path):
     upper_green = np.array([70, 255, 255])
 
 
+
+    colorRanges = [lower_red, lower_blue, lower_green, upper_red, upper_blue, upper_green]
+    colors = ['red', 'blue', 'green']
+
+
+    # SEPARATING OUT RED, BLUE, GREEN SHAPES
+    for i in range(0, 3):
+        mask_img = cv2.inRange(img_hsv, colorRanges[i], colorRanges[i + 3])
+        result_img = cv2.bitwise_and(img, img, mask=mask_img)
+        gray_img = cv2.cvtColor(result_img, cv2.COLOR_RGB2GRAY)
+        blur_img = cv2.GaussianBlur(gray_img, (5, 5), 1, 1, 1, cv2.BORDER_WRAP)
+        canny = cv2.Canny(blur_img, 50, 50)
+        shapes = get_contours(canny, colors[i])
+
     # Separating out blue
 
-    maskblue_img = cv2.inRange(img_hsv, lower_red, upper_red)
-    resultblue_img = cv2.bitwise_and(img, img, mask=maskblue_img)
-    grayblue_img = cv2.cvtColor(resultblue_img, cv2.COLOR_RGB2GRAY)
-    blurblue_img = cv2.GaussianBlur(grayblue_img, (7, 3), -1, 0, -1, cv2.BORDER_WRAP)
-
-    canny = cv2.Canny(blurblue_img, 50, 50)
-
-    shapes = get_contours(canny, 'red')
+    # maskblue_img = cv2.inRange(img_hsv, lower_blue, upper_blue)
+    # resultblue_img = cv2.bitwise_and(img, img, mask=maskblue_img)
+    # grayblue_img = cv2.cvtColor(resultblue_img, cv2.COLOR_RGB2GRAY)
+    # # blurblue_img = cv2.GaussianBlur(grayblue_img, (7, 3), -1, 0, -1, cv2.BORDER_WRAP)  THIS LINES WORKS NEAR PERFECT FOR CIRCLES BUT NOT FOR OTHERS
+    # blurblue_img = cv2.GaussianBlur(grayblue_img, (5, 5), 1, 1, 1, cv2.BORDER_WRAP)
+    #
+    # canny = cv2.Canny(blurblue_img, 50, 50)
+    #
+    # shapes = get_contours(canny, 'blue')
 
     # Separating out red
     # maskred_img = cv2.inRange(img_hsv, lower_red, upper_red)
